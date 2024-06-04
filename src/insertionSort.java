@@ -1,8 +1,8 @@
 //STATUS = CONCLUÍDO
 
 public class insertionSort {
-    static int comparacoes = 0;
-    static int trocas = 0;
+    static float comparacoes = 0;
+    static float trocas = 0;
     public void sort (int[] lista) {
         int primeiro = 0;
         int ultimo = (lista.length - 1);
@@ -29,11 +29,11 @@ public class insertionSort {
         }
     }
 
-    public static int getComparacoes() {
+    public static float getComparacoes() {
         return comparacoes;
     }
 
-    public static int getTrocas() {
+    public static float getTrocas() {
         return trocas;
     }
 }

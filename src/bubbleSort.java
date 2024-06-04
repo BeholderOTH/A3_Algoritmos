@@ -1,8 +1,8 @@
 //STATUS = CONCLUÍDO
 public class bubbleSort {
-    static int comparacoes = 0;
-    static int trocas = 0;
-    public static void sort(int[] lista){
+    static float comparacoes = 0;
+    static float trocas = 0;
+    public void sort(int[] lista){
         int iteracao, i, aux;
 
         for (iteracao = 0; iteracao < lista.length - 1; iteracao++) {
@@ -18,11 +18,11 @@ public class bubbleSort {
         }
     }
 
-    public static int getComparacoes() {
+    public static float getComparacoes() {
         return comparacoes;
     }
 
-    public static int getTrocas() {
+    public static float getTrocas() {
         return trocas;
     }
 }

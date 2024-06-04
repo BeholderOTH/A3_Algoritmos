@@ -16,51 +16,34 @@ diferentes: cem, mil, dez mil, cem mil e um milhão.
 
 public class Main {
     public static void main(String[] args) {
-        //Arrays
-        int[] listaTeste = {13, 8, 10, 5, 100, 15, 1};
-        int[] listaTesteDois = {13, 8, 10, 5, 100, 15, 1};
-        float[] listaTesteTres = {13, 8, 10, 5, 100, 15, 1};
-        int[] listaCemElementos = new int[100];
-        float[] listaTesteQuick = new float[10];
-        int[] listaMilElementos = new int[1000];
-        int[] listaDezMilElementos = new int[10000];
-        int[] listaCemMilElementos = new int[100000];
-        int[] listaMilhaoElementos = new int[1000000];
+        //Definição e inicialização dos Arrays
+        int[] tamanhoArrays = {100, 1000, 10000, 100000, 1000000};
+        int[] listaUsada = new int[tamanhoArrays[4]];
 
         //Função responsável por gerar números aleatórios
         Random classeAleatoria = new Random();
 
-        for(int i = 0; i < listaTesteQuick.length; i++){
-            listaTesteQuick[i] = classeAleatoria.nextFloat(Float.MAX_VALUE);
-        }
-
         //Preenche os Arrays com números positivos inteiros aleatórios
-        for(int i = 0; i < listaCemElementos.length; i++){
-            listaCemElementos[i] = classeAleatoria.nextInt(Integer.MAX_VALUE);
+        for(int i = 0; i < listaUsada.length; i++){
+            listaUsada[i] = classeAleatoria.nextInt(Integer.MAX_VALUE);
         }
 
         //Chamada de função para organizar a lista em ordem crescente
-        Arrays.sort(listaCemElementos);
+        Arrays.sort(listaUsada);
 
-        //Função para inversão de ordem numérica
-
-        /*
-        for (int i = 0; i < listaCemElementos.length / 2; i++) {
-            int temp = listaCemElementos[i];
-            listaCemElementos[i] = listaCemElementos[listaCemElementos.length - i - 1];
-            listaCemElementos[listaCemElementos.length - i - 1] = temp;
-        }
-        */
+        //Chamada da função para inversão de lista
+        listaUsada = inversaoDeLista(listaUsada);
 
         //Definição de listas copiadas para cada variedade de algoritmo de ordenação
-        int[] listaCemElementos2 = Arrays.copyOf(listaCemElementos, listaCemElementos.length);
-        int[] listaCemElementos3 = Arrays.copyOf(listaCemElementos, listaCemElementos.length);
-        float[] listaCemElementos4 = new float[listaCemElementos.length];
-        int[] listaCemElementos5 = Arrays.copyOf(listaCemElementos, listaCemElementos.length);
+        //int[][] listasCopiadas;
+        int[] listaC2 = Arrays.copyOf(listaUsada, listaUsada.length);
+        int[] listaC3 = Arrays.copyOf(listaUsada, listaUsada.length);
+        float[] listaC4 = new float[listaUsada.length];
+        int[] listaC5 = Arrays.copyOf(listaUsada, listaUsada.length);
 
-        // Preencher as listas Float com os valores das listas originais convertidos para Float
-        for (int i = 0; i < listaCemElementos.length; i++) {
-            listaCemElementos4[i] = (float) listaCemElementos[i];
+        // Preencher a lista C4 (QuickSort) Float com os valores das listas originais convertidos para Float
+        for (int i = 0; i < listaC4.length; i++) {
+            listaC4[i] = (float) listaUsada[i];
         }
 
         //Inicialização de método de ordenação
@@ -70,84 +53,65 @@ public class Main {
         insertionSort insertion = new insertionSort();
         mergeSort merge = new mergeSort();
 
-        //Teste do funcionamento do método de ordenação
-        //quick.sort(0, listaCemElementos4.length - 1, listaCemElementos4);
+        //BubbleSort
+        long tempoBubble = medirTempoDeOrdenacao(bubble::sort, listaUsada);
+        //SelectionSort
+        long tempoSelection = medirTempoDeOrdenacao(selection::sort, listaC2);
+        //InsertionSort
+        long tempoInsertion = medirTempoDeOrdenacao(insertion::sort, listaC3);
+        //MergeSort
+        long tempoMerge = medirTempoDeOrdenacao((array) -> merge.sort(0, array.length, array), listaC5);
 
-        //BUBBLE SORT
-
-        //Começo da medição de tempo para ordenar as listas
-        long comecoTempoBubble = System.nanoTime();
-
-        //Execução do método de ordenação com respectivas quantidades de elementos
-        bubble.sort(listaCemElementos);
-
-        //Fim da medição de tempo para ordenar as listas
-        long fimTempoBubble = System.nanoTime();
-        long tempoDeExecucaoBubble = fimTempoBubble - comecoTempoBubble;
-
-        //SELECTION SORT
-
-        //Começo da medição de tempo para ordenar as listas
-        long comecoTempoSelection = System.nanoTime();
-
-        //Execução do método de ordenação com respectivas quantidades de elementos
-        selection.sort(listaCemElementos2);
-
-        //Fim da medição de tempo para ordenar as listas
-        long fimTempoSelection = System.nanoTime();
-        long tempoDeExecucaoSelection = fimTempoSelection - comecoTempoSelection;
-
-        //INSERTION SORT
-
-        //Começo da medição de tempo para ordenar as listas
-        long comecoTempoInsertion = System.nanoTime();
-
-        //Execução do método de ordenação com respectivas quantidades de elementos
-        insertion.sort(listaCemElementos3);
-
-        //Fim da medição de tempo para ordenar as listas
-        long fimTempoInsertion = System.nanoTime();
-        long tempoDeExecucaoInsertion = fimTempoInsertion - comecoTempoInsertion;
-
-        //QUICK SORT
-
+        //QuickSort
         //Começo da medição de tempo para ordenar as listas
         long comecoTempoQuick = System.nanoTime();
 
         //Execução do método de ordenação com respectivas quantidades de elementos
-        //quick.sort(0, listaCemElementos4.length - 1, listaCemElementos4);
-        quick.sort(0, listaTesteQuick.length - 1, listaTesteQuick);
+        quick.sort(0, listaC4.length - 1, listaC4);
 
         //Fim da medição de tempo para ordenar as listas
         long fimTempoQuick = System.nanoTime();
-        long tempoDeExecucaoQuick = fimTempoQuick - comecoTempoQuick;
-
-        //MERGE SORT
-
-        //Começo da medição de tempo para ordenar as listas
-        long comecoTempoMerge = System.nanoTime();
-
-        //Execução do método de ordenação com respectivas quantidades de elementos
-        merge.sort(0, listaCemElementos5.length, listaCemElementos5);
-
-        //Fim da medição de tempo para ordenar as listas
-        long fimTempoMerge = System.nanoTime();
-        long tempoDeExecucaoMerge = fimTempoMerge - comecoTempoMerge;
+        long tempoQuick = fimTempoQuick - comecoTempoQuick;
 
         //Exibição dos resultados para análise
-        //System.out.println("BubbleSort:" + Arrays.toString(listaTeste) + "\n" + Arrays.toString(listaCemElementos));
         System.out.println("Número de comparações (Bubble):" + bubble.getComparacoes());
-        System.out.println("Número de trocas (Bubble):" + bubble.getTrocas());
         System.out.println("Número de comparações (Selection):" + selection.getComparacoes());
-        System.out.println("Número de trocas (Selection):" + selection.getTrocas());
         System.out.println("Número de comparações (Insertion):" + insertion.getComparacoes());
-        System.out.println("Número de trocas (Insertion):" + insertion.getTrocas());
         System.out.println("Número de comparações (Quick):" + quick.getComparacoes());
-        System.out.println("Número de trocas (Quick):" + quick.getTrocas());
         System.out.println("Número de comparações (Merge):" + merge.getComparacoes());
+        System.out.println("Número de trocas (Bubble):" + bubble.getTrocas());
+        System.out.println("Número de trocas (Selection):" + selection.getTrocas());
+        System.out.println("Número de trocas (Insertion):" + insertion.getTrocas());
+        System.out.println("Número de trocas (Quick):" + quick.getTrocas());
         System.out.println("Número de trocas (Merge):" + merge.getTrocas());
-        System.out.println("Tempo de execução (Bubble): " + tempoDeExecucaoBubble + "\n" + "(Selection): " + tempoDeExecucaoSelection
-        + "\n" + "(Insertion): " + tempoDeExecucaoInsertion + "\n" + "(Quick): " + tempoDeExecucaoQuick
-        + "\n" + "(Merge): " + tempoDeExecucaoMerge);
+        System.out.println("Tempo de execução (Bubble): " + tempoBubble);
+        System.out.println("Tempo de execução (Selection): " + tempoSelection);
+        System.out.println("Tempo de execução (Insertion): " + tempoInsertion);
+        System.out.println("Tempo de execução (Quick): " + tempoQuick);
+        System.out.println("Tempo de execução (Merge): " + tempoMerge);
+    }
+
+    //Função para inverter o Arranjo selecionado
+    public static int[] inversaoDeLista(int[] lista){
+        for (int i = 0; i < lista.length / 2; i++) {
+            int temp = lista[i];
+            lista[i] = lista[lista.length - i - 1];
+            lista[lista.length - i - 1] = temp;
+        }
+        return lista;
+    }
+
+    //Interface para manejar os métodos genéricos "Sort" em cada classe
+    interface sortGenerico {
+        void sort (int[] lista);
+    }
+
+    //Função universal para executar e cronometrar o tempo dos métodos de ordenação de Arranjos
+    public static long medirTempoDeOrdenacao (sortGenerico alg, int[] lista){
+        long comecoTempo = System.nanoTime();
+        alg.sort(lista);
+        long fimTempo = System.nanoTime();
+        long tempoTotal = fimTempo - comecoTempo;
+        return tempoTotal;
     }
 }

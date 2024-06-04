@@ -1,8 +1,8 @@
-import java.util.Random;
+//STATUS = INDECISO.
 
 public class mergeSort {
-    private static int comparacoes = 0;
-    private static int trocas = 0;
+    private static float comparacoes = 0;
+    private static float trocas = 0;
 
         public static void sort(int inicio, int tamanho, int[] v) {
             if (inicio < tamanho - 1) {
@@ -26,10 +26,10 @@ public class mergeSort {
                     auxiliar[k] = v[i];
                     k++; i++;
                 } else {
-                    trocas++;
                     auxiliar[k] = v[j];
                     k++; j++;
                 }
+                trocas++;
             }
             while (i < meio) {
                 comparacoes++;
@@ -46,11 +46,11 @@ public class mergeSort {
             }
         }
 
-    public static int getComparacoes() {
+    public static float getComparacoes() {
         return comparacoes;
     }
 
-    public static int getTrocas() {
+    public static float getTrocas() {
         return trocas;
     }
 }
